@@ -1,0 +1,3 @@
+rootProject.name = 'devStack'
+
+include ':app'
