@@ -13,7 +13,7 @@ class ListItem extends React.Component {
     if (this.props.expanded) {
       return (
         <CardSection>
-          <Text style={{flex: 1}}>
+          <Text style={{flex: 1, padding: 15}}>
             {this.props.library.description}
           </Text>
         </CardSection>
