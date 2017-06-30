@@ -5,7 +5,7 @@ import ListItem from './ListItem'
 
 class LibraryList extends React.Component {
   componentWillMount() {
-    const ds = new ListView.dataSource({
+    const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     })
 
