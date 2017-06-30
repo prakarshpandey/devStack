@@ -1,13 +1,40 @@
 import React from 'react'
 import { CardSection } from './common'
-import { Text } from 'react-native'
+import { Text, TouchableWithoutFeedback, View, LayoutAnimation } from 'react-native'
+import * as actions from '../actions'
+import { connect } from 'react-redux'
 
-export default class ListItem extends React.Component {
-  render() {
+class ListItem extends React.Component {
+  componentWillUpdate () {
+    LayoutAnimation.spring()
+  }
+
+  renderDescription () {
+    if (this.props.expanded) {
+      return (
+        <CardSection>
+          <Text style={{flex: 1}}>
+            {this.props.library.description}
+          </Text>
+        </CardSection>
+      )
+    }
+    return null
+  }
+
+  render () {
+    console.log(this.props)
     return (
-      <CardSection>
-        <Text style={styles.titleStyle}>{this.props.library.title}</Text>
-      </CardSection>
+      <TouchableWithoutFeedback onPress={() => this.props.selectLibrary(this.props.library.id)}>
+        <View>
+          <CardSection>
+            <Text style={styles.titleStyle}>
+              {this.props.library.title}
+            </Text>
+          </CardSection>
+          {this.renderDescription()}
+        </View>
+      </TouchableWithoutFeedback>
     )
   }
 }
@@ -18,3 +45,12 @@ const styles = {
     paddingLeft: 15
   }
 }
+
+const mapStateToProps = (state, ownProps) => {
+  const expanded = state.selectedLibraryId === ownProps.library.id
+  return {
+    expanded: expanded
+  }
+}
+
+export default connect(mapStateToProps, actions)(ListItem)
